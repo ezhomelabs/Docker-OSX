@@ -83,9 +83,13 @@ docker run -it \
 
 ```bash
 
+#error: (qemu) gtk initialization failed - do not use snap docker installation, install from docker official website
+
 docker run -it \
     --device /dev/kvm \
     -p 50922:10022 \
+    -e AUDIO_DRIVER=pa,server=unix:/tmp/pulseaudio.socket \
+    -v "/run/user/$(id -u)/pulse/native:/tmp/pulseaudio.socket" \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -e "DISPLAY=${DISPLAY:-:0.0}" \
     -e GENERATE_UNIQUE=true \
